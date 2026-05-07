@@ -10,17 +10,18 @@ public class CadastroCurso {
     }
     public void cadastrar(Curso curso){
         if (curso == null){
-            System.out.println("Erro: Não foi possível cadastar. Digite um nome válido.");
+            System.out.println("Erro: N�o foi poss�vel cadastar. Digite um nome v�lido.");
             return;
+
         }
         if(this.repositorio.buscar(curso.getNomeCurso())!= null){
-            System.out.println("Erro: já existe um curso com esse nome. ");
+            System.out.println("Erro: j� existe um curso com esse nome. ");
             return;
         }
         System.out.println("Curso " + curso.getNomeCurso()+ " Cadastrado com sucesso!");
     }
     public void remover(String nomeCurso) {
-        //INSERIR REGRA DE NÃO REMOVER CURSO COM ALUNOS MATRICULADOOOOOS
+        //INSERIR REGRA DE N�O REMOVER CURSO COM ALUNOS MATRICULADOOOOOS
         this.repositorio.remover(nomeCurso);
     }
 
