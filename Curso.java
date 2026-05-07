@@ -1,5 +1,7 @@
 package PacoteCurso;
 
+import PacoteDepartamento.Departamento;
+
 public class Curso {
     private int idCurso;
     private String nomeCurso;
