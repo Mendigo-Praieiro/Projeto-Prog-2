@@ -1,28 +1,39 @@
 package PacoteCurso;
 
+import ExceptionsRepositorioCurso.LAException;
+
 public class CadastroCurso {
+
     private RepositorioCursos repositorio;
 
-
-    public CadastroCurso(RepositorioCursos repositorio){
+    public CadastroCurso(RepositorioCursos repositorio) {
         this.repositorio = repositorio;
-
     }
-    public void cadastrar(Curso curso){
-        if (curso == null){
-            System.out.println("Erro: N�o foi poss�vel cadastar. Digite um nome v�lido.");
-            return;
 
+    public void cadastrar(Curso curso) throws CursoException, LAException {
+        if (curso == null) {
+            throw new CursoException("Erro: Nao foi possivel cadastrar. Curso invalido (nulo).");
         }
-        if(this.repositorio.buscar(curso.getNomeCurso())!= null){
-            System.out.println("Erro: j� existe um curso com esse nome. ");
-            return;
+        if (this.repositorio.buscar(curso.getNomeCurso()) != null) {
+
+            throw new CursoException("Erro: Ja existe um curso cadastrado com o nome " + curso.getNomeCurso() + ".");
         }
-        System.out.println("Curso " + curso.getNomeCurso()+ " Cadastrado com sucesso!");
+
+        this.repositorio.inserir(curso);
+        System.out.println("Curso " + curso.getNomeCurso() + " cadastrado com sucesso!");
     }
-    public void remover(String nomeCurso) {
-        //INSERIR REGRA DE N�O REMOVER CURSO COM ALUNOS MATRICULADOOOOOS
+
+
+    public void remover(String nomeCurso) throws CursoException {
+        // Futuramente, a regra de "não remover curso com alunos" entrará aqui
+
+        Curso cursoEncontrado = this.repositorio.buscar(nomeCurso);
+        if (cursoEncontrado == null) {
+            throw new CursoException("Erro: Curso " + nomeCurso + " nao encontrado para remocao.");
+        }
+
         this.repositorio.remover(nomeCurso);
+        System.out.println("Curso removido com sucesso.");
     }
 
     public Curso buscar(String nomeCurso) {
