@@ -4,7 +4,7 @@ public class RepositorioDepartamentoArray implements RepositorioDepartamento {
     private Departamento [] departamentos;
     protected int indice;
 
-    private RepositorioDepartamentoArray (int tamanhoMaximo){
+    public RepositorioDepartamentoArray (int tamanhoMaximo){
         this.departamentos = new Departamento[tamanhoMaximo];
         this.indice = 0;
 

@@ -14,7 +14,7 @@ public class Departamento {
 
     public Departamento(int idDepartamento, String nome, String unidade, String area) {
         this.idDepartamento = idDepartamento;
-        this.nomeDepartamento = nomeDepartamento;
+        this.nomeDepartamento = nome;
         this.unidade = unidade;
         this.area = area;
 

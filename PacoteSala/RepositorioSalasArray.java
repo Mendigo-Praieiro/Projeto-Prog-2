@@ -1,4 +1,5 @@
 package PacoteSala;
+
 public class RepositorioSalasArray implements RepositorioSalas {
 
     private Sala[] salas;
