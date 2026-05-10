@@ -1,5 +1,7 @@
 package PacoteCurso;
 
+import ExceptionsRepositorioCurso.LAException;
+
 public class RepositorioCursosArray implements RepositorioCursos {
     private Curso[] cursos;
     private int indice;
@@ -10,12 +12,12 @@ public class RepositorioCursosArray implements RepositorioCursos {
     }
 
     @Override
-    public void inserir(Curso curso) {
+    public void inserir(Curso curso) throws LAException {
         if (this.indice < this.cursos.length) {
-            this.cursos[this.indice]     = curso;
+            this.cursos[this.indice] = curso;
             this.indice++;
         } else {
-            System.out.println("Erro, limite máximo de cursos Tá chei.");
+            throw new LAException(indice);
         }
     }
 

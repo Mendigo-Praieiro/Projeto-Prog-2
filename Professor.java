@@ -1,4 +1,5 @@
 package PacoteProfessor;
+import PacoteCadeira.Cadeira;
 import PacoteDepartamento.Departamento;
 
 public class Professor extends Pessoa {

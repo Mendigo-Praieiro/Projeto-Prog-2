@@ -9,24 +9,27 @@ public class CadastroProfessor {
         this.repositorio = repositorio;
     }
 
-    public void cadastrar(Professor professor) {
+    public void cadastrar(Professor professor) throws ProfessorException {
+
         if (professor == null || professor.getCpf() == null) {
-            System.out.println("Erro: Dados inválidos do professor.");
-            return;
+            throw new ProfessorException("Dados invalidos: Professor nulo ou sem CPF.");
         }
 
-        // Verifica se já não existe alguém cadastrado com esse CPF
         if (this.repositorio.buscar(professor.getCpf()) != null) {
-            System.out.println("Erro: Já existe um professor com este CPF.");
-            return;
+            throw new ProfessorException("Ja existe um professor com este CPF.");
         }
 
         this.repositorio.inserir(professor);
         System.out.println("Professor(a) " + professor.getNome() + " cadastrado(a) com sucesso!");
     }
 
-    public void remover(String cpf) {
+    public void remover(String cpf) throws ProfessorException {
+        Professor prof = this.repositorio.buscar(cpf);
+        if (prof == null) {
+            throw new ProfessorException("Professor de CPF " + cpf + " nao encontrado para remocao.");
+        }
         this.repositorio.remover(cpf);
+        System.out.println("Professor removido com sucesso.");
     }
 
     public Professor buscar(String cpf) {
