@@ -25,7 +25,6 @@ public class CadastroCurso {
 
 
     public void remover(String nomeCurso) throws CursoException {
-        // Futuramente, a regra de "não remover curso com alunos" entrará aqui
 
         Curso cursoEncontrado = this.repositorio.buscar(nomeCurso);
         if (cursoEncontrado == null) {
