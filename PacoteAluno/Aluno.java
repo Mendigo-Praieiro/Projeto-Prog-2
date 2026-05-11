@@ -1,6 +1,6 @@
 package PacoteAluno;
 
-import PacoteProfessor.Pessoa; // Importa a classe do seu colega
+import PacoteProfessor.Pessoa; 
 
 public class Aluno extends Pessoa {
     private int matricula;
