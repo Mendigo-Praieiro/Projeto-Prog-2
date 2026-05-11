@@ -28,11 +28,11 @@ public class CadastroAluno {
         }
     }
 
-    // Regra de Negócio: Rendimento Global
+    
     public void atualizarRendimento(String cpf) {
         Aluno a = repositorio.buscar(cpf);
         if (a != null) {
-            // Aqui podes somar as notas do Boletim e atualizar o Histórico
+            
             double mediaAtual = a.getBoletim().calcularMedia();
             a.getHistorico().setRendimentoGlobal(mediaAtual);
         }
