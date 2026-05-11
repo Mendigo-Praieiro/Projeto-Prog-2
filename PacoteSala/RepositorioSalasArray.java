@@ -51,7 +51,6 @@ public class RepositorioSalasArray implements RepositorioSalas {
 
     @Override
     public Sala[] listar() {
-        // CORRIGIDO: Adicionado nome para a variável (arrayRetorno)
         Sala[] arrayRetorno = new Sala[total];
         for (int i = 0; i < total; i++) {
             arrayRetorno[i] = salas[i];
