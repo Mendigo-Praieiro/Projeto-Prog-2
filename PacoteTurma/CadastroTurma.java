@@ -25,11 +25,11 @@ public class CadastroTurma {
             throw new Exception("Turma não encontrada para matrícula.");
         }
 
-        // Se a turma estiver lotada, o método matricularAluno vai estourar a exceção que fizemos acima!
+       
         turma.matricularAluno(aluno);
     }
 
-    // Retorna a String do relatório para ser printada SOMENTE na classe Main
+    
     public String obterRelatorioTurma(int idTurma) throws Exception {
         Turma turma = repositorio.buscar(idTurma);
         if (turma != null) {
