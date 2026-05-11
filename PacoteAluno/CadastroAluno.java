@@ -17,7 +17,7 @@ public class CadastroAluno {
         repositorio.inserir(aluno);
     }
 
-    // Regra de Negócio: Alterar Status
+    //Alterar Status
     public void trancarMatricula(String cpf) throws Exception {
         Aluno a = repositorio.buscar(cpf);
         if (a != null) {
