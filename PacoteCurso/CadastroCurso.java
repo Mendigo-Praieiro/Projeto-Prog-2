@@ -42,4 +42,5 @@ public class CadastroCurso {
     public void emitirRelatorio() {
         System.out.println(this.repositorio.listar());
     }
+    
 }
