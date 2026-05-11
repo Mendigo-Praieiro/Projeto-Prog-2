@@ -52,7 +52,6 @@ public class Fachada {
     
     public void cadastrarDepartamento(Departamento d) { cadastroDepartamento.cadastrar(d); }
     
-    // Note a nova LAException adicionada pelos seus colegas
     public void cadastrarCurso(Curso c) throws CursoException, LAException { cadastroCurso.cadastrar(c); }
     
     public void cadastrarSala(Sala s) throws SalaException { cadastroSala.cadastrar(s); }
