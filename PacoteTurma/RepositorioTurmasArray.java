@@ -15,7 +15,7 @@ public class RepositorioTurmasArray implements RepositorioTurma {
             turmas[indice] = turma;
             indice++;
         } else {
-            // Lançando o erro para a camada superior em vez de printar
+            
             throw new Exception("Erro: Limite máximo de turmas atingido no banco de dados.");
         }
     }
@@ -40,7 +40,7 @@ public class RepositorioTurmasArray implements RepositorioTurma {
                 return;
             }
         }
-        // Se o loop terminar e não achar, joga a bomba pra cima!
+
         throw new Exception("Erro: Turma com ID " + idTurma + " não encontrada para remoção.");
     }
 
