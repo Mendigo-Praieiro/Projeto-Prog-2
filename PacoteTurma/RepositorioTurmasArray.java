@@ -9,6 +9,7 @@ public class RepositorioTurmasArray implements RepositorioTurma {
         this.indice = 0;
     }
 
+    
     @Override
     public void inserir(Turma turma) throws Exception {
         if (indice < turmas.length) {
