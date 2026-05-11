@@ -49,7 +49,7 @@ public class RepositorioDepartamentoArray implements RepositorioDepartamento {
     public String listar() {
         String texto = "========Listagem de Departamentos========\n";
         for (int i = 0; i < this.indice; i++) {
-            // Corrigido para this.cursos[i]
+          
             texto += "-" + this.departamentos[i].getNomeDepartamento() + " Area: " + this.departamentos[i].getArea() + "\n";
         }
         return texto;
