@@ -43,7 +43,7 @@ public class Turma {
         throw new Exception("Erro: Aluno não encontrado na turma " + idTurma);
     }
 
-    // Ao invés de printar, retorna a String montada!
+    // Ao invés de printar, retorna a String montada
     public String gerarDiarioDeClasse() {
         String diario = "\n--- DIÁRIO DE CLASSE: TURMA " + idTurma + " ---\n";
         diario += "Disciplina: " + cadeira.getNomeCadeira() + "\n";
