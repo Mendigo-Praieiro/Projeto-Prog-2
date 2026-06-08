@@ -1,0 +1,22 @@
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+        // Aqui você carrega o arquivo .fxml que desenhou no Scene Builder
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("minha-tela.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240); // Define o tamanho da janela
+        stage.setTitle("Minha Aplicação");
+        stage.setScene(scene);
+        stage.show(); // Exibe a janela
+    }
+
+    public static void main(String[] args) {
+        launch(); // Método do JavaFX que inicia a aplicação
+    }
+}
