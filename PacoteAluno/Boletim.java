@@ -1,4 +1,4 @@
-package PacoteAluno;
+package pacoteEntidades;
 
 public class Boletim {
     private double[] notas;
