@@ -1,6 +1,4 @@
-package PacoteCurso;
-
-import PacoteDepartamento.Departamento;
+package pacoteEntidades;
 
 public class Curso {
     private int idCurso;
@@ -10,8 +8,8 @@ public class Curso {
     private int cargaHorariaTotal;
     private boolean ativo;
 
-    public Curso (int idCurso, String nomeCurso, Departamento departamento,
-                  int numeroVagas, int cargaHorariaTotal, boolean ativo){
+    public Curso (String nomeCurso,
+                  int numeroVagas){
 
         this.idCurso = idCurso;
         this.nomeCurso = nomeCurso;
