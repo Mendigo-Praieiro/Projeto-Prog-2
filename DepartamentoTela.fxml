@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="260.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.DepartamentoController">
+   <children>
+      <Label layoutX="74.0" layoutY="20.0" text="Cadastro de Departamento">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      
+      <Label layoutX="35.0" layoutY="70.0" text="Nome do Departamento:" />
+      <TextField fx:id="txtNome" layoutX="35.0" layoutY="90.0" prefWidth="330.0" />
+      
+      <Label layoutX="35.0" layoutY="135.0" text="Área Acadêmica (Ex: Tecnologia, Humanas):" />
+      <TextField fx:id="txtArea" layoutX="35.0" layoutY="155.0" prefWidth="330.0" />
+      
+      <Button fx:id="btnSalvar" layoutX="285.0" layoutY="205.0" mnemonicParsing="false" onAction="#salvarDepartamento" prefWidth="80.0" text="Salvar" />
+   </children>
+</AnchorPane>
