@@ -1,4 +1,4 @@
-package PacoteSala;
+package pacoteEntidades;
 
 public class Sala {
 
