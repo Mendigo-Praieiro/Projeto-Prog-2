@@ -1,9 +1,4 @@
-package PacoteTurma;
-
-import PacoteAluno.Aluno;
-import PacoteProfessor.Professor;
-import PacoteCadeira.Cadeira;
-import PacoteSala.Sala;
+package pacoteEntidades;
 
 public class Turma {
     private int idTurma;
@@ -13,7 +8,7 @@ public class Turma {
     private Aluno[] alunosMatriculados;
     private int totalAlunos;
 
-    public Turma(int idTurma, Cadeira cadeira, Professor professor, Sala sala, int capacidadeMaxima) {
+    public Turma(int idTurma, int capacidadeMaxima) {
         this.idTurma = idTurma;
         this.cadeira = cadeira;
         this.professor = professor;
@@ -40,10 +35,10 @@ public class Turma {
                 return;
             }
         }
-        throw new Exception("Erro: Aluno não encontrado na turma " + idTurma);
+        throw new Exception("Erro: pacoteEntidades.Aluno não encontrado na turma " + idTurma);
     }
 
-    // Ao invés de printar, retorna a String montada
+    // Ao invés de printar, retorna a String montada!
     public String gerarDiarioDeClasse() {
         String diario = "\n--- DIÁRIO DE CLASSE: TURMA " + idTurma + " ---\n";
         diario += "Disciplina: " + cadeira.getNomeCadeira() + "\n";
@@ -70,4 +65,3 @@ public class Turma {
     public Professor getProfessor() { return professor; }
     public Sala getSala() { return sala; }
 }
-
