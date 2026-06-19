@@ -1,46 +1,62 @@
-package PacoteCurso;
+package pacoteNegocios;
 
-import ExceptionsRepositorioCurso.LAException;
+import pacoteDados.IRepositorio;
+import pacoteDados.RepositorioCursosArray;
+import pacoteDados.Excecoes.LimiteAtingException;
+import pacoteDados.Excecoes.CursoException;
+import pacoteEntidades.Curso;
 
 public class CadastroCurso {
 
-    private RepositorioCursos repositorio;
+    // Usando a interface
+    private IRepositorio<Curso, String> repositorio;
 
-    public CadastroCurso(RepositorioCursos repositorio) {
-        this.repositorio = repositorio;
+    // Construtor vazio acionando o Singleton
+    public CadastroCurso() {
+        this.repositorio = RepositorioCursosArray.getInstancia();
     }
 
-    public void cadastrar(Curso curso) throws CursoException, LAException {
-        if (curso == null) {
-            throw new CursoException("Erro: Nao foi possivel cadastrar. Curso invalido (nulo).");
-        }
-        if (this.repositorio.buscar(curso.getNomeCurso()) != null) {
-
-            throw new CursoException("Erro: Ja existe um curso cadastrado com o nome " + curso.getNomeCurso() + ".");
+    // criando o objeto
+    public void cadastrar(String nomeCurso, int numeroVagas) throws Exception {
+        if (nomeCurso == null || nomeCurso.trim().isEmpty()) {
+            throw new CursoException("Erro: Não foi possível cadastrar. Nome do curso inválido.");
         }
 
-        this.repositorio.inserir(curso);
-        System.out.println("Curso " + curso.getNomeCurso() + " cadastrado com sucesso!");
+        if (this.repositorio.buscar(nomeCurso) != null) {
+            throw new CursoException("Erro: Já existe um curso cadastrado com o nome " + nomeCurso + ".");
+        }
+
+        // criando o objeto
+        Curso novoCurso = new Curso(nomeCurso, numeroVagas);
+
+        this.repositorio.inserir(novoCurso);
     }
 
-
-    public void remover(String nomeCurso) throws CursoException {
-
-        Curso cursoEncontrado = this.repositorio.buscar(nomeCurso);
-        if (cursoEncontrado == null) {
-            throw new CursoException("Erro: Curso " + nomeCurso + " nao encontrado para remocao.");
-        }
+    public void remover(String nomeCurso) throws Exception {
 
         this.repositorio.remover(nomeCurso);
-        System.out.println("Curso removido com sucesso.");
     }
 
     public Curso buscar(String nomeCurso) {
         return this.repositorio.buscar(nomeCurso);
     }
 
-    public void emitirRelatorio() {
-        System.out.println(this.repositorio.listar());
+    // retorna uma String para a interface
+    public String emitirRelatorio() {
+        int total = this.repositorio.getTotal();
+
+        if (total == 0) {
+            return "Nenhum curso cadastrado no momento.\n";
+        }
+
+        Curso[] lista = this.repositorio.listar();
+        String texto = "======== Relatório de Cursos ========\n";
+
+        for (int i = 0; i < total; i++) {
+            texto += "- Curso: " + lista[i].getNomeCurso() + " | Vagas: " + lista[i].getNumeroVagas() + "\n";
+        }
+        texto += "=====================================\n";
+
+        return texto;
     }
-    
 }
