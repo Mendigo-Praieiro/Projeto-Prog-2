@@ -1,25 +1,42 @@
-package PacoteDepartamento;
+package pacoteDados;
 
-public class RepositorioDepartamentoArray implements RepositorioDepartamento {
-    private Departamento [] departamentos;
-    protected int indice;
+import pacoteEntidades.Departamento;
+import pacoteDados.Excecoes.DepartamentoException;
 
-    public RepositorioDepartamentoArray (int tamanhoMaximo){
+
+// interface genérica: Objeto é Departamento, o ID (nomeDepartamento) é String
+public class RepositorioDepartamentoArray implements IRepositorio<Departamento, String> {
+
+
+    private static RepositorioDepartamentoArray instancia;
+
+
+    private Departamento[] departamentos;
+    private int indice;
+
+
+    private RepositorioDepartamentoArray(int tamanhoMaximo){
         this.departamentos = new Departamento[tamanhoMaximo];
         this.indice = 0;
+    }
 
+
+    public static RepositorioDepartamentoArray getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioDepartamentoArray(10);
+        }
+        return instancia;
     }
 
     @Override
-    public void inserir(Departamento departamento) {
+    public void inserir(Departamento departamento) throws Exception {
         if (this.indice < this.departamentos.length) {
-            this.departamentos[this.indice]     = departamento;
+            this.departamentos[this.indice] = departamento;
             this.indice++;
         } else {
-            System.out.println("Erro, limite máximo de departamentos Tá chei.");
-        }
-        
 
+            throw new DepartamentoException("Erro: Limite máximo de departamentos atingido no banco de dados.");
+        }
     }
 
     @Override
@@ -33,7 +50,7 @@ public class RepositorioDepartamentoArray implements RepositorioDepartamento {
     }
 
     @Override
-    public void remover(String nomeDepartamento) {
+    public void remover(String nomeDepartamento) throws Exception {
         for (int i = 0; i < this.indice; i++) {
             if (this.departamentos[i].getNomeDepartamento().equals(nomeDepartamento)) {
                 this.departamentos[i] = this.departamentos[this.indice - 1];
@@ -42,18 +59,33 @@ public class RepositorioDepartamentoArray implements RepositorioDepartamento {
                 return;
             }
         }
-        System.out.println("Erro: departamento não encontrado para remoção.");
 
+        throw new DepartamentoException("Erro: Departamento '" + nomeDepartamento + "' não encontrado para remoção.");
+    }
+
+
+    @Override
+    public void atualizar(Departamento departamento) {
+        for (int i = 0; i < this.indice; i++) {
+            if (this.departamentos[i].getNomeDepartamento().equals(departamento.getNomeDepartamento())) {
+                this.departamentos[i] = departamento;
+                return;
+            }
+        }
+    }
+
+
+    @Override
+    public Departamento[] listar() {
+        Departamento[] copia = new Departamento[this.indice];
+        for (int i = 0; i < this.indice; i++) {
+            copia[i] = this.departamentos[i];
+        }
+        return copia;
     }
 
     @Override
-    public String listar() {
-        String texto = "========Listagem de Departamentos========\n";
-        for (int i = 0; i < this.indice; i++) {
-          
-            texto += "-" + this.departamentos[i].getNomeDepartamento() + " Area: " + this.departamentos[i].getArea() + "\n";
-        }
-        return texto;
-
+    public int getTotal() {
+        return this.indice;
     }
 }
