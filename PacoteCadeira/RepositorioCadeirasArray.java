@@ -1,19 +1,35 @@
-package PacoteCadeira;
+package pacoteDados;
 
-public class RepositorioCadeirasArray implements RepositorioCadeira {
+import pacoteDados.Excecoes.CadeiraException;
+import pacoteEntidades.Cadeira;
+import pacoteDados.Excecoes.CadeiraException;
+
+public class RepositorioCadeirasArray implements IRepositorio<Cadeira, Integer> {
+
+
+    private static RepositorioCadeirasArray instancia;
 
     private Cadeira[] cadeiras;
     private int totalCadeiras;
 
-    public RepositorioCadeirasArray() {
+
+    private RepositorioCadeirasArray() {
         this.cadeiras = new Cadeira[10];
         this.totalCadeiras = 0;
     }
 
+
+    public static RepositorioCadeirasArray getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioCadeirasArray();
+        }
+        return instancia;
+    }
+
     @Override
-    public void inserir(Cadeira cadeira) {
+    public void inserir(Cadeira cadeira) throws Exception {
         if (cadeira == null) {
-            return;
+            throw new CadeiraException("Erro: Cadeira inválida (nula).");
         }
         if (totalCadeiras == cadeiras.length) {
             aumentarTamanho();
@@ -23,8 +39,9 @@ public class RepositorioCadeirasArray implements RepositorioCadeira {
     }
 
     @Override
-    public Cadeira buscar(int codigo) {
+    public Cadeira buscar(Integer codigo) {
         for (int i = 0; i < totalCadeiras; i++) {
+
             if (cadeiras[i].getCodigoCadeira() == codigo) {
                 return cadeiras[i];
             }
@@ -33,7 +50,7 @@ public class RepositorioCadeirasArray implements RepositorioCadeira {
     }
 
     @Override
-    public boolean remover(int codigo) {
+    public void remover(Integer codigo) throws Exception {
         for (int i = 0; i < totalCadeiras; i++) {
             if (cadeiras[i].getCodigoCadeira() == codigo) {
                 for (int j = i; j < totalCadeiras - 1; j++) {
@@ -41,10 +58,22 @@ public class RepositorioCadeirasArray implements RepositorioCadeira {
                 }
                 cadeiras[totalCadeiras - 1] = null;
                 totalCadeiras--;
-                return true;
+                return;
             }
         }
-        return false;
+
+        throw new CadeiraException("Erro: Cadeira com código " + codigo + " não encontrada para remoção.");
+    }
+
+
+    @Override
+    public void atualizar(Cadeira cadeira) {
+        for (int i = 0; i < totalCadeiras; i++) {
+            if (cadeiras[i].getCodigoCadeira() == cadeira.getCodigoCadeira()) {
+                cadeiras[i] = cadeira;
+                return;
+            }
+        }
     }
 
     @Override
