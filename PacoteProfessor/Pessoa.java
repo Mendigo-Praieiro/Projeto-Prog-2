@@ -1,4 +1,4 @@
-package PacoteProfessor;
+package pacoteEntidades;
 
 public class Pessoa {
     protected String nome;
