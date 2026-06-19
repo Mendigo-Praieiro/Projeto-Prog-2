@@ -1,4 +1,4 @@
-package PacoteAluno;
+package pacoteEntidades;
 
 public class Historico {
     private String[] disciplinasConcluidas;
