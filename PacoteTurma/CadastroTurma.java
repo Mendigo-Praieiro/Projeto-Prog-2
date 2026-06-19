@@ -1,42 +1,53 @@
-package PacoteTurma;
+package pacoteNegocios;
 
-
-import PacoteAluno.Aluno;
+import pacoteDados.IRepositorio;
+import pacoteDados.RepositorioTurmasArray;
+import pacoteEntidades.Aluno;
+import pacoteEntidades.Turma;
 
 public class CadastroTurma {
-    private RepositorioTurma repositorio;
 
-    public CadastroTurma(RepositorioTurma repositorio) {
-        this.repositorio = repositorio;
+    // Usando interface generica
+    private IRepositorio<Turma, Integer> repositorio;
+
+    // Ligando ao construtor vazio
+    public CadastroTurma() {
+        this.repositorio = RepositorioTurmasArray.getInstancia();
     }
 
-    public void cadastrar(Turma turma) throws Exception {
-        if (turma == null) {
-            throw new Exception("Turma inválida.");
+    // Verificiação de parametros de cadastro
+    public void cadastrar(int idTurma, int capacidade) throws Exception {
+
+        if (this.repositorio.buscar(idTurma) != null) {
+            // Se você quiser criar uma TurmaException depois, pode substituir aqui!
+            throw new Exception("Erro: Já existe uma turma cadastrada com este ID: " + idTurma);
         }
-        if (repositorio.buscar(turma.getIdTurma()) != null) {
-            throw new Exception("Já existe uma turma cadastrada com este ID: " + turma.getIdTurma());
-        }
-        repositorio.inserir(turma);
+
+        // Criação de Obj
+        Turma novaTurma = new Turma(idTurma, capacidade);
+
+        this.repositorio.inserir(novaTurma);
     }
 
+    // Lógica de matricula
     public void matricularAlunoNaTurma(int idTurma, Aluno aluno) throws Exception {
-        Turma turma = repositorio.buscar(idTurma);
+        Turma turma = this.repositorio.buscar(idTurma);
+
         if (turma == null) {
-            throw new Exception("Turma não encontrada para matrícula.");
+            throw new Exception("Erro: Turma não encontrada para matrícula.");
         }
 
-       
         turma.matricularAluno(aluno);
     }
 
-    
+    // Retorna string para a interface
     public String obterRelatorioTurma(int idTurma) throws Exception {
-        Turma turma = repositorio.buscar(idTurma);
+        Turma turma = this.repositorio.buscar(idTurma);
+
         if (turma != null) {
             return turma.gerarDiarioDeClasse();
         } else {
-            throw new Exception("Turma " + idTurma + " não encontrada para gerar relatório.");
+            throw new Exception("Erro: Turma " + idTurma + " não encontrada para gerar relatório.");
         }
     }
 }
