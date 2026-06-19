@@ -1,14 +1,12 @@
-package PacoteProfessor;
-import PacoteCadeira.Cadeira;
-import PacoteDepartamento.Departamento;
+package pacoteEntidades;
 
 public class Professor extends Pessoa {
     protected Departamento departamento;
     protected String especialidade;
     protected Cadeira[] cadeiras; // interação com a classe das cadeiras
-    private int indiceCadeiras; //
+    private int indiceCadeiras;
 
-    public Professor(String nome, String cpf, Departamento departamento, String especialidade) {
+    public Professor(String nome, String cpf, String especialidade) {
         super(nome, cpf);
         this.departamento = departamento;
         this.especialidade = especialidade;
