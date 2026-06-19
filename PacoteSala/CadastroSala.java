@@ -1,54 +1,61 @@
-package PacoteSala;
+package pacoteNegocios;
+
+import pacoteDados.IRepositorio;
+import pacoteDados.RepositorioSalasArray;
+import pacoteDados.Excecoes.SalaException;
+import pacoteEntidades.Sala;
 
 public class CadastroSala {
 
-    private RepositorioSalas repositorio;
+    //Usando a interface genérica
+    private IRepositorio<Sala, Integer> repositorio;
 
-    public CadastroSala(RepositorioSalas repositorio) {
-        this.repositorio = repositorio;
+    public CadastroSala() {
+        this.repositorio = RepositorioSalasArray.getInstancia();
     }
 
-
-    public void cadastrar(Sala sala) throws SalaException {
-        if (sala == null) {
-            throw new SalaException("A sala fornecida eh invalida (nula).");
-        }
+    // Verificiação de parametros de cadastro
+    public void cadastrar(int numero, String bloco, int capacidadeMaxima) throws Exception {
 
         // Verifica se já existe uma sala com esse número
-        if (this.repositorio.buscar(sala.getNumero()) != null) {
-            throw new SalaException("Ja existe uma sala cadastrada com o numero " + sala.getNumero());
+        if (this.repositorio.buscar(numero) != null) {
+            throw new SalaException("Erro: Já existe uma sala cadastrada com o número " + numero);
         }
 
-        this.repositorio.salvar(sala);
-        System.out.println("Sala " + sala.getNumero() + " (Bloco " + sala.getBloco() + ") cadastrada com sucesso!");
+        // Criação do obj
+        Sala novaSala = new Sala(numero, bloco, capacidadeMaxima);
+
+        // inserção de nova sala
+        this.repositorio.inserir(novaSala);
     }
 
-    // Removendo com Exception
-    public void remover(int numero) throws SalaException {
-        boolean removido = this.repositorio.remover(numero);
-        if (!removido) {
-            throw new SalaException("Sala numero " + numero + " nao encontrada para remocao.");
-        }
-        System.out.println("Sala " + numero + " removida com sucesso.");
+    // Remoção direto do repositório
+    public void remover(Integer numero) throws Exception {
+        this.repositorio.remover(numero);
     }
 
-    public Sala buscar(int numero) {
+    public Sala buscar(Integer numero) {
         return this.repositorio.buscar(numero);
     }
 
-    public void emitirRelatorio() {
-        Sala[] lista = this.repositorio.listar();
-        System.out.println("\n======== Relatorio de Salas ========");
-        if (this.repositorio.getTotal() == 0) {
-            System.out.println("Nenhuma sala cadastrada.");
-            return;
+    // Retorna String para a interface
+    public String emitirRelatorio() {
+        int total = this.repositorio.getTotal();
+
+        if (total == 0) {
+            return "Nenhuma sala cadastrada no momento.\n";
         }
 
-        for (int i = 0; i < this.repositorio.getTotal(); i++) {
-            System.out.println("- Sala: " + lista[i].getNumero() +
+        Sala[] lista = this.repositorio.listar();
+        String texto = "======== Relatório de Salas ========\n";
+
+        for (int i = 0; i < total; i++) {
+            texto += "- Sala: " + lista[i].getNumero() +
                     " | Bloco: " + lista[i].getBloco() +
-                    " | Capacidade: " + lista[i].getCapacidadeMaxima() + " alunos");
+                    " | Capacidade: " + lista[i].getCapacidadeMaxima() + " alunos\n";
         }
-        System.out.println("====================================\n");
+        texto += "====================================\n";
+
+        return texto;
     }
 }
