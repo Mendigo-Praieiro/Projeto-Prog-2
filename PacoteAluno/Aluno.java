@@ -1,6 +1,4 @@
-package PacoteAluno;
-
-import PacoteProfessor.Pessoa; 
+package pacoteEntidades;
 
 public class Aluno extends Pessoa {
     private int matricula;
@@ -11,12 +9,12 @@ public class Aluno extends Pessoa {
     private Historico historico;
 
     public Aluno(String nome, String cpf, int matricula) {
-        super(nome, cpf); // Puxa nome e cpf da classe Pessoa
+        super(nome, cpf); // pega nome e cpf da classe Pessoa
         this.matricula = matricula;
         this.statusMatricula = true;
         this.statusCurso = "Cursando";
 
-        // Composição: O boletim e histórico nascem junto com o aluno
+        // o boletim e histórico são criados junto com o aluno
         this.boletim = new Boletim();
         this.historico = new Historico();
     }
