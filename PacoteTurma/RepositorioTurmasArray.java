@@ -1,28 +1,44 @@
-package PacoteTurma;
+package pacoteDados;
 
-public class RepositorioTurmasArray implements RepositorioTurma {
+import pacoteDados.Excecoes.TurmaException;
+import pacoteEntidades.Turma;
+import pacoteDados.Excecoes.LimiteAtingException;
+
+
+public class RepositorioTurmasArray implements IRepositorio<Turma, Integer> {
+
+
+    private static RepositorioTurmasArray instancia;
+
     private Turma[] turmas;
     private int indice;
 
-    public RepositorioTurmasArray(int tamanhoMaximo) {
+
+    private RepositorioTurmasArray(int tamanhoMaximo) {
         this.turmas = new Turma[tamanhoMaximo];
         this.indice = 0;
     }
 
-    
+    public static RepositorioTurmasArray getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioTurmasArray(50); // Tamanho padrão
+        }
+        return instancia;
+    }
+
     @Override
     public void inserir(Turma turma) throws Exception {
         if (indice < turmas.length) {
             turmas[indice] = turma;
             indice++;
         } else {
-            
-            throw new Exception("Erro: Limite máximo de turmas atingido no banco de dados.");
+
+            throw new LimiteAtingException("Erro: Limite máximo de turmas atingido no banco de dados.", indice);
         }
     }
 
     @Override
-    public Turma buscar(int idTurma) {
+    public Turma buscar(Integer idTurma) { // ID alterado para Integer
         for (int i = 0; i < indice; i++) {
             if (turmas[i].getIdTurma() == idTurma) {
                 return turmas[i];
@@ -32,7 +48,7 @@ public class RepositorioTurmasArray implements RepositorioTurma {
     }
 
     @Override
-    public void remover(int idTurma) throws Exception {
+    public void remover(Integer idTurma) throws Exception { // ID alterado para Integer
         for (int i = 0; i < indice; i++) {
             if (turmas[i].getIdTurma() == idTurma) {
                 turmas[i] = turmas[indice - 1];
@@ -42,7 +58,18 @@ public class RepositorioTurmasArray implements RepositorioTurma {
             }
         }
 
-        throw new Exception("Erro: Turma com ID " + idTurma + " não encontrada para remoção.");
+        throw new TurmaException("Erro: Turma com ID " + idTurma + " não encontrada para remoção.", indice);
+    }
+
+
+    @Override
+    public void atualizar(Turma turma) {
+        for (int i = 0; i < indice; i++) {
+            if (turmas[i].getIdTurma() == turma.getIdTurma()) {
+                turmas[i] = turma;
+                return;
+            }
+        }
     }
 
     @Override
@@ -52,5 +79,11 @@ public class RepositorioTurmasArray implements RepositorioTurma {
             copia[i] = turmas[i];
         }
         return copia;
+    }
+
+
+    @Override
+    public int getTotal() {
+        return this.indice;
     }
 }
