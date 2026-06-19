@@ -1,4 +1,4 @@
-package PacoteCadeira;
+package pacoteEntidades;
 
 public class Cadeira {
 
