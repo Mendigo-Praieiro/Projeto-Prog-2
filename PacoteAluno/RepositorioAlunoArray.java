@@ -1,21 +1,35 @@
-package PacoteAluno;
+package pacoteDados;
 
-public class RepositorioAlunoArray implements RepositorioAluno {
+import pacoteDados.Excecoes.LimiteAtingException;
+import pacoteEntidades.Aluno;
+import pacoteDados.Excecoes.AlunoException;
+
+
+public class RepositorioAlunoArray implements IRepositorio<Aluno, String> {
     private Aluno[] alunos;
     private int indice;
 
-    public RepositorioAlunoArray(int tamanhoMaximo) {
+    private static RepositorioAlunoArray instancia;
+
+    private RepositorioAlunoArray(int tamanhoMaximo) {
         this.alunos = new Aluno[tamanhoMaximo];
         this.indice = 0;
     }
 
+    public static RepositorioAlunoArray getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioAlunoArray(100);
+        }
+        return instancia;
+    }
+
     @Override
-    public void inserir(Aluno aluno) {
+    public void inserir(Aluno aluno) throws Exception {
         if (indice < alunos.length) {
             alunos[indice] = aluno;
             indice++;
         } else {
-            System.out.println("Erro: Limite de alunos atingido.");
+            throw new LimiteAtingException("Erro: Limite de alunos atingido no banco de dados.", indice);
         }
     }
 
@@ -30,7 +44,7 @@ public class RepositorioAlunoArray implements RepositorioAluno {
     }
 
     @Override
-    public void remover(String cpf) {
+    public void remover(String cpf) throws Exception {
         for (int i = 0; i < indice; i++) {
             if (alunos[i].getCpf().equals(cpf)) {
                 alunos[i] = alunos[indice - 1];
@@ -39,6 +53,7 @@ public class RepositorioAlunoArray implements RepositorioAluno {
                 return;
             }
         }
+        throw new AlunoException("Erro: Aluno não encontrado para remoção.");
     }
 
     @Override
