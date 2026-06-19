@@ -1,6 +1,4 @@
-package PacoteDepartamento;
-
-import PacoteProfessor.Professor;
+package pacoteEntidades;
 
 public class Departamento {
 
@@ -12,9 +10,9 @@ public class Departamento {
     private Professor coordenador;
 
 
-    public Departamento(int idDepartamento, String nome, String unidade, String area) {
+    public Departamento(String no7, String unidade) {
         this.idDepartamento = idDepartamento;
-        this.nomeDepartamento = nome;
+        this.nomeDepartamento = nomeDepartamento;
         this.unidade = unidade;
         this.area = area;
 
